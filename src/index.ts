@@ -1,6 +1,6 @@
-export { Button } from './components/boton';
-export type { ButtonProps } from './components/boton';
+export { Button } from './components/atoms/button';
+export type { ButtonProps } from './components/atoms/button';
 
-export { DataTableGrid } from './components/DataTableGrid';
-export type { DataTableGridProps, DataTableColumn } from './components/DataTableGrid';
+export { DataTableGrid } from './components/organisms/DataTableGrid';
+export type { DataTableGridProps, DataTableColumn } from './components/organisms/DataTableGrid';
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'; // 1. Sumamos useEffect
-import { Button } from './components/boton';
-import { DataTableGrid } from './components/DataTableGrid';
-import type { DataTableColumn } from './components/DataTableGrid';
+import { Button } from './components/atoms/button';
+import { DataTableGrid } from './components/organisms/DataTableGrid';
+import type { DataTableColumn } from './components/organisms/DataTableGrid';
 import './App.css';
 
 function App() {
