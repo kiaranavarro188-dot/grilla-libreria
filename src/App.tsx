@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react'; // 1. Sumamos useEffect
+import { useState, useEffect } from 'react';
 import { Button } from './components/atoms/button';
 import { DataTableGrid } from './components/organisms/DataTableGrid';
 import type { DataTableColumn } from './components/organisms/DataTableGrid';
 import './App.css';
 
 function App() {
-  // 2. Arranca como array vacío y sumamos estado de carga
+  // Estados para simular la carga de datos de las tablas de la API
   const [tableData, setTableData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [tableData2, setTableData2] = useState<any[]>([]);
   const [loading2, setLoading2] = useState(true);
-  // 3. Columnas adaptadas a los campos reales de la API de prueba
+
+  // Definición de columnas para la Tabla 1
   const columns: DataTableColumn[] = [
     { data: 'id', title: 'ID', orderable: true },
     { data: 'name', title: 'Nombre', orderable: true },
@@ -22,6 +23,7 @@ function App() {
     }
   ];
 
+  // Definición de columnas para la Tabla 2
   const columns2: DataTableColumn[] = [
     { data: 'id', title: 'ID', orderable: true },
     { data: 'name', title: 'Nombre', orderable: true },
@@ -34,7 +36,7 @@ function App() {
     }
   ];
 
-  // 4. Llamada a la API al montar el componente
+  // Carga de datos de la API para la Tabla 1
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(res => res.json())
@@ -45,47 +47,102 @@ function App() {
       .catch(err => console.error("Error en API:", err));
   }, []);
 
-
+  // Carga de datos de la API para la Tabla 2
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(res => res.json())
       .then(data => {
         setTableData2(data);
         setLoading2(false);
-        console.log(data);
       })
       .catch(err => console.error("Error en API 2:", err));
   }, []);
 
-  // 5. Cartel de espera mientras descarga
-  if (loading) return <div style={{ padding: '2rem', textAlign: 'center' }}>Cargando usuarios...</div>;
+  // Pantalla de bloqueo mientras la API responde
+  if (loading || loading2) return <div style={{ padding: '2rem', textAlign: 'center' }}>Cargando entorno...</div>;
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'sans-serif', maxWidth: '800px', margin: '0 auto' }}>
-      <hr style={{ margin: '2rem 0' }} />
-
+      
+      {/* ========================================================================= */}
+      {/* SECCIÓN 1: LABORATORIO DE BOTONES REUTILIZABLES                          */}
+      {/* ========================================================================= */}
       <section style={{ marginBottom: '3rem' }}>
-        <h2>1. Componente Button</h2>
-        <div style={{ padding: '1rem', border: '1px dashed #ccc', borderRadius: '8px' }}>
-          <Button label="Haz clic aquí" onClick={() => alert('¡El botón funciona!')} />
+        <h2>1. Componente Button (Catálogo de Pruebas)</h2>
+        <div style={{ 
+          padding: '2rem', 
+          border: '1px dashed #ccc', 
+          borderRadius: '8px', 
+          backgroundColor: '#fcfcfc',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px' 
+        }}>
+          
+          {/* Fila de Variantes */}
+          <div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#666' }}>Variantes de Color:</h4>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <Button label="Primary" variant="primary" onClick={() => alert('¡Acción ejecutada!')} />
+              <Button label="Secondary" variant="secondary" />
+              <Button label="Danger" variant="danger" />
+              <Button label="Success" variant="success" />
+              <Button label="Outline" variant="outline" color="#cc0000" />
+            </div>
+          </div>
+
+          {/* Fila de Tamaños */}
+          <div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#666' }}>Escala de Tamaños:</h4>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <Button label="Small" size="sm" variant="primary" />
+              <Button label="Medium" size="md" variant="primary" />
+              <Button label="Large" size="lg" variant="primary" />
+            </div>
+          </div>
+
+          {/* Fila de Formas y Tipografías */}
+          <div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#666' }}>Shapes y Fuentes controladas:</h4>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <Button label="Estilo Pill (Cápsula)" shape="pill" variant="success" />
+              <Button label="Estilo Recto" shape="square" variant="danger" />
+              <Button label="Fuente Monospace" font="mono" variant="secondary" />
+            </div>
+          </div>
+
+          {/* Fila de Íconos y Restricciones Nativas */}
+          <div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#666' }}>Estructuras Complejas y Atributos HTML:</h4>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <Button label="Buscar Usuario" icon="🔍" iconPosition="left" variant="primary" />
+              <Button label="Siguiente Paso" icon="➡️" iconPosition="right" variant="secondary" />
+              {/* Al estar deshabilitado, el cursor cambia y el onClick se anula automáticamente */}
+              <Button label="Botón Bloqueado Nativamente" disabled onClick={() => alert('No debería leerse')} />
+            </div>
+          </div>
+
+          {/* Comportamiento de Bloque (Ancho Completo) */}
+          <div>
+            <h4 style={{ margin: '0 0 8px 0', color: '#666' }}>Comportamiento Estructural:</h4>
+            <Button label="Botón en Bloque (fullWidth={true})" fullWidth variant="primary" />
+          </div>
+
         </div>
       </section>
+      {/* ========================================================================= */}
 
+      <hr style={{ margin: '2rem 0' }} />
+
+      {/* SECCIÓN 2: DATATABLE GRID 1 */}
       <section style={{ marginBottom: '3rem' }}>
-        <h2>2. Componente DataTableGrid</h2>
+        <h2>2. Componente DataTableGrid (Usuarios Activos)</h2>
         <div style={{ padding: '1rem', border: '1px dashed #ccc', borderRadius: '8px' }}>
           <DataTableGrid
             data={tableData}
             columns={columns}
-            onEdit={(row) => {
-              console.log('Controlador - Editar fila:', row);
-              alert(`Editando a ${row.name} (ID: ${row.id})`);
-            }}
-
-            onDelete={(row) => {
-              console.log('Controlador - Eliminar fila:', row);
-              alert(`Eliminando a ${row.name} (ID: ${row.id})`);
-            }}
+            onEdit={(row) => alert(`Editando a ${row.name}`)}
+            onDelete={(row) => alert(`Eliminando a ${row.name}`)}
             customActions={[
               {
                 id: 'custom-view',
@@ -93,31 +150,21 @@ function App() {
                 style: { background: '#dbeafe', color: '#1e40af', border: '1px solid #3b82f6', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer' },
                 onClick: (row) => alert(`Viendo perfil de ${row.email}`)
               },
-
             ]}
-            options={{
-              pageLength: 3,
-              lengthMenu: [3, 5, 10]
-            }}
+            options={{ pageLength: 3, lengthMenu: [3, 5, 10] }}
           />
         </div>
       </section>
 
+      {/* SECCIÓN 3: DATATABLE GRID 2 */}
       <section style={{ marginBottom: '3rem' }}>
-        <h2>2. Componente DataTableGrid</h2>
+        <h2>3. Componente DataTableGrid (Contactos de Respaldo)</h2>
         <div style={{ padding: '1rem', border: '1px dashed #ccc', borderRadius: '8px' }}>
           <DataTableGrid
             data={tableData2}
             columns={columns2}
-            onEdit={(row) => {
-              console.log('Controlador - Editar fila:', row);
-              alert(`Editando a ${row.name} (ID: ${row.id})`);
-            }}
-
-            onDelete={(row) => {
-              console.log('Controlador - Eliminar fila:', row);
-              alert(`Eliminando a ${row.name} (ID: ${row.id})`);
-            }}
+            onEdit={(row) => alert(`Editando a ${row.name}`)}
+            onDelete={(row) => alert(`Eliminando a ${row.name}`)}
             customActions={[
               {
                 id: 'custom-view',
@@ -125,12 +172,8 @@ function App() {
                 style: { background: '#dbeafe', color: '#1e40af', border: '1px solid #3b82f6', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer' },
                 onClick: (row) => alert(`Viendo perfil de ${row.name}`)
               },
-
             ]}
-            options={{
-              pageLength: 3,
-              lengthMenu: [3, 5, 10]
-            }}
+            options={{ pageLength: 3, lengthMenu: [3, 5, 10] }}
           />
         </div>
       </section>
