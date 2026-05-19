@@ -83,11 +83,11 @@ function App() {
           <div>
             <h4 style={{ margin: '0 0 8px 0', color: '#666' }}>Variantes de Color:</h4>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Button label="Primary" variant="primary" onClick={() => alert('¡Acción ejecutada!')} />
-              <Button label="Secondary" variant="secondary" />
-              <Button label="Danger" variant="danger" />
-              <Button label="Success" variant="success" />
-              <Button label="Outline" variant="outline" color="#cc0000" />
+              <Button label="Default" color="#0050a5" />
+              <Button label="Secondary" color="#ff922c"/>
+              <Button label="Danger" color="#cc0000"/>
+              <Button label="Success" color="#009100"/>
+              <Button label="Outline" color="#ff91f0" />
             </div>
           </div>
 
@@ -95,9 +95,9 @@ function App() {
           <div>
             <h4 style={{ margin: '0 0 8px 0', color: '#666' }}>Escala de Tamaños:</h4>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <Button label="Small" size="sm" variant="primary" />
-              <Button label="Medium" size="md" variant="primary" />
-              <Button label="Large" size="lg" variant="primary" />
+              <Button label="Small" size="sm" />
+              <Button label="Medium" size="md" />
+              <Button label="Large" size="lg" />
             </div>
           </div>
 
