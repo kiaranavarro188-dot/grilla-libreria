@@ -5,16 +5,18 @@ export type ButtonFont = 'sans' | 'mono' | 'serif';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonShape = 'default' | 'pill' | 'square';
 
-// Heredamos todo lo nativo, pero prohibimos style y children para tener control total
 export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'style' | 'children'> {
-  label?: string; // Ahora es opcional por si quieren un botón que sea SOLO ícono
+  label?: string; 
   variant?: ButtonVariant;
   font?: ButtonFont;
   size?: ButtonSize;
-  shape?: ButtonShape; // <--- Controlar la forma sin dar acceso a borderRadius
+  shape?: ButtonShape; 
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
-  isLoading?: boolean; // <--- Estado de carga
-  fullWidth?: boolean; // <--- Ocupar el 100% del contenedor
-  color?: string; // <--- Permitir personalizar el fondo sin exponer style completo 
+  isLoading?: boolean; 
+  fullWidth?: boolean; 
+  color?: string; 
+  
+  // RECOMENDACIÓN: Si el botón es SOLO ícono (no hay label), obligar por accesibilidad a pasar un aria-label.
+  // Como heredas de ButtonHTMLAttributes, 'aria-label' ya existe, pero está bueno documentarlo en tu equipo.
 }
